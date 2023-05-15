@@ -1,0 +1,360 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should have an empty queue after clear("all") 1`] = `[]`;
+
+exports[`Should have remove items in class queue after clear("c") 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveClassBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "baz",
+    "properties": {
+      "haveShipBalance": true,
+    },
+  },
+]
+`;
+
+exports[`Should have remove items in class queue after clear("class") 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveClassBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "baz",
+    "properties": {
+      "haveShipBalance": true,
+    },
+  },
+]
+`;
+
+exports[`Should replace entire queue on sync() 1`] = `
+[
+  {
+    "command": "bar",
+    "properties": {
+      "haveClassBalance": true,
+    },
+  },
+  {
+    "command": "baz",
+    "properties": {
+      "haveParalysis": false,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "!b" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "haveBalance": false,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "!c" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "haveClassBalance": false,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "!e" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "haveEq": false,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "!p" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "haveParalysis": false,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "!s" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "haveShipBalance": false,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "!t" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "beStunned": false,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "!u" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "beStanding": false,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "!w" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "beBound": false,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "b" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "haveBalance": true,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "balance" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "haveBalance": true,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "c" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "haveClassBalance": true,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "class" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "haveClassBalance": true,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "e" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "haveEq": true,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "equilibrium" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "haveEq": true,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "free" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "beStunned": false,
+      "haveBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "freestand" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "frl" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {},
+  },
+]
+`;
+
+exports[`Should translate property "full" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveClassBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "p" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "haveParalysis": true,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "paralysis" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "haveParalysis": false,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "s" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "haveShipBalance": true,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "stun" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "beStunned": false,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "t" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "beStunned": true,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "u" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "beStanding": true,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "unbound" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "beBound": false,
+    },
+  },
+]
+`;
+
+exports[`Should translate property "w" correctly 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "beBound": true,
+    },
+  },
+]
+`;

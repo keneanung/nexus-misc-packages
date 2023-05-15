@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../node_modules/@keneanung/nexus-package-builder/resources/nexus-schema.json
+name: QueueManager
+enabled: true
+description: A queue manager for Iron Realms Nexus 3
+type: group
+website: https://keneanung.github.io/nexus-misc-packages
+items:
+  - type: function
+    enabled: true
+    name: onLoad
+    codeFile: ./queueManager.js
+  - type: function
+    code: run_function('onLoad', undefined, 'QueueManager')
+    name: onInstall
+    enabled: true
+

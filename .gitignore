@@ -1,0 +1,10 @@
+node_modules
+/nxs/queueManager.js
+/nxs/queueManager.js.map
+/lib
+*.tgz
+/coverage
+/nxs/*.nxs
+# stryker temp files
+.stryker-tmp
+/reports/
