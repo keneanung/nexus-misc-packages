@@ -38,7 +38,7 @@
     "webpack": "^5.74.0",
     "webpack-auto-inject-version-next": "^1.2.4",
     "webpack-cli": "^5.0.0",
-    "webpack-dev-server": "^4.11.1",
+    "webpack-dev-server": "^4.15.0",
     "write-pkg": "^5.1.0"
   },
   "scripts": {
