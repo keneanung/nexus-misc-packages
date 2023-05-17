@@ -79,3 +79,25 @@ test('Should replace entire queue on sync()', () => {
 
   expect(sut.getQueue()).toMatchSnapshot();
 })
+
+test('Should put prepended items first in queue', () => {
+  const sut = new QueueManager();
+  sut.track('foo', 'full');
+  sut.track('bar', 'class');
+  sut.track('baz', 's');
+
+  sut.trackFirst('bamboozle', 'freestand')
+
+  expect(sut.getQueue()).toMatchSnapshot();
+})
+
+test('Should put items at given position in queue with trackAt', () => {
+  const sut = new QueueManager();
+  sut.track('foo', 'full');
+  sut.track('bar', 'class');
+  sut.track('baz', 's');
+
+  sut.trackAt(3, 'bamboozle', 'freestand')
+
+  expect(sut.getQueue()).toMatchSnapshot();
+})

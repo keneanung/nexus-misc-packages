@@ -46,6 +46,82 @@ exports[`Should have remove items in class queue after clear("class") 1`] = `
 ]
 `;
 
+exports[`Should put items at given position in queue with trackAt 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveClassBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "bar",
+    "properties": {
+      "haveClassBalance": true,
+    },
+  },
+  {
+    "command": "bamboozle",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "baz",
+    "properties": {
+      "haveShipBalance": true,
+    },
+  },
+]
+`;
+
+exports[`Should put prepended items first in queue 1`] = `
+[
+  {
+    "command": "bamboozle",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "foo",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveClassBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "bar",
+    "properties": {
+      "haveClassBalance": true,
+    },
+  },
+  {
+    "command": "baz",
+    "properties": {
+      "haveShipBalance": true,
+    },
+  },
+]
+`;
+
 exports[`Should replace entire queue on sync() 1`] = `
 [
   {

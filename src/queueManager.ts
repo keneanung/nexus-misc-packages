@@ -137,31 +137,29 @@ export class QueueManager {
       }
     }
   }
+
+  public trackFirst = (command: string, queue: string) => {
+    const itemProperties = this.parseQueue(queue);
+    this.queue.unshift({command, properties: itemProperties})
+  }
+
+  public trackAt = (position: number, command: string, queue: string) => {
+    const itemProperties = this.parseQueue(queue);
+    this.queue.splice(position - 1, 0, {command, properties: itemProperties})
+  }
+
+  public trackReplace = (position: number, command: string, queue: )
 }
 
 /*
-CLEARQUEUE <queue>                      - Clear one of your queues.
-CLEARQUEUE ALL                          - Clear everything out of your queues.
-QUEUE LIST                              - List your current queue.
-QUEUE ADD <queue> <command>
-                                        - Add an item to the end of one of your
-                                          queues.
 QUEUE ADDCLEAR <queue> <command>
                                         - Clear the specified queue and add an
                                           item to the fresh queue.
 QUEUE ADDCLEARFULL <queue> <command>
                                         - Clear the whole queue and add an item
                                           to the fresh queue.
-QUEUE INSERT <queue> <index> <command>
-                                        - Add an item to a specific point in one
-                                          of your queues.
-QUEUE PREPEND <queue> <command>
-                                        - Add an item to the start of one of
-                                          your queues.
 QUEUE REPLACE <queue> <index> <command>
                                         - Replace an item in one of your queues.
 QUEUE REMOVE <index>
                                         - Remove an item from a queue.
-QUEUE CLEAR <queue>
-                                        - Same as CLEARQUEUE
                                         */
