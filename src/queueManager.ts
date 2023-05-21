@@ -148,7 +148,10 @@ export class QueueManager {
     this.queue.splice(position - 1, 0, {command, properties: itemProperties})
   }
 
-  public trackReplace = (position: number, command: string, queue: )
+  public trackReplace = (position: number, command: string, queue: string) => {
+    const itemProperties = this.parseQueue(queue);
+    this.queue.splice(position - 1, 1, {command, properties: itemProperties})
+  }
 }
 
 /*
@@ -158,8 +161,6 @@ QUEUE ADDCLEAR <queue> <command>
 QUEUE ADDCLEARFULL <queue> <command>
                                         - Clear the whole queue and add an item
                                           to the fresh queue.
-QUEUE REPLACE <queue> <index> <command>
-                                        - Replace an item in one of your queues.
 QUEUE REMOVE <index>
                                         - Remove an item from a queue.
                                         */

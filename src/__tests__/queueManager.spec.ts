@@ -101,3 +101,14 @@ test('Should put items at given position in queue with trackAt', () => {
 
   expect(sut.getQueue()).toMatchSnapshot();
 })
+
+test('Should replace items at given position in queue with trackReplace', () => {
+  const sut = new QueueManager();
+  sut.track('foo', 'full');
+  sut.track('bar', 'class');
+  sut.track('baz', 's');
+
+  sut.trackReplace(2, 'bamboozle', 'freestand')
+
+  expect(sut.getQueue()).toMatchSnapshot();
+})

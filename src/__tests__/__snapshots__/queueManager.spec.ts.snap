@@ -139,6 +139,38 @@ exports[`Should replace entire queue on sync() 1`] = `
 ]
 `;
 
+exports[`Should replace items at given position in queue with trackReplace 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveClassBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "bamboozle",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "baz",
+    "properties": {
+      "haveShipBalance": true,
+    },
+  },
+]
+`;
+
 exports[`Should translate property "!b" correctly 1`] = `
 [
   {
