@@ -160,4 +160,15 @@ export class QueueManager {
     this.clear(full ? 'all' : queue);
     this.track(command, queue);
   };
+
+  public run = (command: string, queue: string) => {
+    const itemProperties = this.parseQueue(queue);
+    for (let i = 0; i < this.queue.length; i++) {
+      const queuedItem = this.queue[i];
+      if (queuedItem.command == command && itemPropertiesEqual(queuedItem.properties, itemProperties)) {
+        this.queue.splice(i, 1);
+        break;
+      }
+    }
+  };
 }

@@ -194,6 +194,98 @@ exports[`Should remove items at given position in queue with trackRemove 1`] = `
 ]
 `;
 
+exports[`Should remove run command from queue (not first item) 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveClassBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "bar",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveClassBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "baz",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveClassBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "boom",
+    "properties": {
+      "beStunned": false,
+      "haveBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+]
+`;
+
+exports[`Should remove run command from queue 1`] = `
+[
+  {
+    "command": "bar",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveClassBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "baz",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveClassBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "foo",
+    "properties": {
+      "beStunned": false,
+      "haveBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "boom",
+    "properties": {
+      "beStunned": false,
+      "haveBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+]
+`;
+
 exports[`Should replace entire queue on sync() 1`] = `
 [
   {

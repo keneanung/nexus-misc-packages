@@ -149,3 +149,29 @@ test('Should clear all queues queue with trackAddClear and full argument', () =>
 
   expect(sut.getQueue()).toMatchSnapshot();
 });
+
+test('Should remove run command from queue', () => {
+  const sut = new QueueManager();
+  sut.track('foo', 'full');
+  sut.track('bar', 'full');
+  sut.track('baz', 'full');
+  sut.track('foo', 'free');
+  sut.track('boom', 'free');
+
+  sut.run('foo', 'full');
+
+  expect(sut.getQueue()).toMatchSnapshot();
+});
+
+test('Should remove run command from queue (not first item)', () => {
+  const sut = new QueueManager();
+  sut.track('foo', 'full');
+  sut.track('bar', 'full');
+  sut.track('baz', 'full');
+  sut.track('foo', 'free');
+  sut.track('boom', 'free');
+
+  sut.run('foo', 'free');
+
+  expect(sut.getQueue()).toMatchSnapshot();
+});
