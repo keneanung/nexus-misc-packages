@@ -1,5 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Should clear all queues queue with trackAddClear and full argument 1`] = `
+[
+  {
+    "command": "bamboozle",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveClassBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+]
+`;
+
+exports[`Should clear given queue with trackAddClear 1`] = `
+[
+  {
+    "command": "bam",
+    "properties": {
+      "beStunned": false,
+      "haveBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "boom",
+    "properties": {
+      "beStunned": false,
+      "haveBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "bamboozle",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveClassBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+]
+`;
+
 exports[`Should have an empty queue after clear("all") 1`] = `[]`;
 
 exports[`Should have remove items in class queue after clear("c") 1`] = `

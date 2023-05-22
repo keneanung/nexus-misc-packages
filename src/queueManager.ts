@@ -155,13 +155,9 @@ export class QueueManager {
   public trackRemove = (position: number) => {
     this.queue.splice(position - 1, 1);
   };
-}
 
-/*
-QUEUE ADDCLEAR <queue> <command>
-                                        - Clear the specified queue and add an
-                                          item to the fresh queue.
-QUEUE ADDCLEARFULL <queue> <command>
-                                        - Clear the whole queue and add an item
-                                          to the fresh queue.
-                                        */
+  public trackAddClear = (command: string, queue: string, full = false) => {
+    this.clear(full ? 'all' : queue);
+    this.track(command, queue);
+  };
+}

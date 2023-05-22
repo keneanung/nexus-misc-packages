@@ -123,3 +123,29 @@ test('Should remove items at given position in queue with trackRemove', () => {
 
   expect(sut.getQueue()).toMatchSnapshot();
 });
+
+test('Should clear given queue with trackAddClear', () => {
+  const sut = new QueueManager();
+  sut.track('foo', 'full');
+  sut.track('bar', 'full');
+  sut.track('baz', 'full');
+  sut.track('bam', 'free');
+  sut.track('boom', 'free');
+
+  sut.trackAddClear('bamboozle', 'full');
+
+  expect(sut.getQueue()).toMatchSnapshot();
+});
+
+test('Should clear all queues queue with trackAddClear and full argument', () => {
+  const sut = new QueueManager();
+  sut.track('foo', 'full');
+  sut.track('bar', 'full');
+  sut.track('baz', 'full');
+  sut.track('bam', 'free');
+  sut.track('boom', 'free');
+
+  sut.trackAddClear('bamboozle', 'full', true);
+
+  expect(sut.getQueue()).toMatchSnapshot();
+});
