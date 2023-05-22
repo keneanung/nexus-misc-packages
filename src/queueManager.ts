@@ -1,4 +1,3 @@
-
 interface QueuedItem {
   command: string;
   properties: QueuedItemProperties;
@@ -17,12 +16,12 @@ interface QueuedItemProperties {
 
 const itemPropertiesEqual = (one: QueuedItemProperties, other: QueuedItemProperties) => {
   const keys = Object.keys(one);
-  if(keys.length !== Object.keys(other).length){
-    return false
+  if (keys.length !== Object.keys(other).length) {
+    return false;
   }
-  const castedKeys = Object.keys(one) as (keyof typeof one)[]
+  const castedKeys = Object.keys(one) as (keyof typeof one)[];
   return castedKeys.every((key) => one[key] === other[key]);
-}
+};
 
 interface CustomQueueComponent {
   letter: string;
@@ -116,42 +115,46 @@ export class QueueManager {
     return customProperties;
   }
 
-  public getQueue = () => this.queue
+  public getQueue = () => this.queue;
 
   public sync = (newCommands: Command[]) => {
     this.clear('all');
-    for (const {command, queue} of newCommands) {
+    for (const { command, queue } of newCommands) {
       this.track(command, queue);
     }
-  }
+  };
 
   public clear = (queue: string) => {
-    if(queue === 'all'){
+    if (queue === 'all') {
       this.queue = [];
       return;
     }
     const queueProps = this.parseQueue(queue);
     for (let i = this.queue.length - 1; i >= 0; i--) {
-      if(itemPropertiesEqual(queueProps, this.queue[i].properties)){
-        this.queue.splice(i,1);
+      if (itemPropertiesEqual(queueProps, this.queue[i].properties)) {
+        this.queue.splice(i, 1);
       }
     }
-  }
+  };
 
   public trackFirst = (command: string, queue: string) => {
     const itemProperties = this.parseQueue(queue);
-    this.queue.unshift({command, properties: itemProperties})
-  }
+    this.queue.unshift({ command, properties: itemProperties });
+  };
 
   public trackAt = (position: number, command: string, queue: string) => {
     const itemProperties = this.parseQueue(queue);
-    this.queue.splice(position - 1, 0, {command, properties: itemProperties})
-  }
+    this.queue.splice(position - 1, 0, { command, properties: itemProperties });
+  };
 
   public trackReplace = (position: number, command: string, queue: string) => {
     const itemProperties = this.parseQueue(queue);
-    this.queue.splice(position - 1, 1, {command, properties: itemProperties})
-  }
+    this.queue.splice(position - 1, 1, { command, properties: itemProperties });
+  };
+
+  public trackRemove = (position: number) => {
+    this.queue.splice(position - 1, 1);
+  };
 }
 
 /*
@@ -161,6 +164,4 @@ QUEUE ADDCLEAR <queue> <command>
 QUEUE ADDCLEARFULL <queue> <command>
                                         - Clear the whole queue and add an item
                                           to the fresh queue.
-QUEUE REMOVE <index>
-                                        - Remove an item from a queue.
                                         */

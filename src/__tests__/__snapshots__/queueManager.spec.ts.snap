@@ -122,6 +122,28 @@ exports[`Should put prepended items first in queue 1`] = `
 ]
 `;
 
+exports[`Should remove items at given position in queue with trackRemove 1`] = `
+[
+  {
+    "command": "foo",
+    "properties": {
+      "beStanding": true,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveClassBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "baz",
+    "properties": {
+      "haveShipBalance": true,
+    },
+  },
+]
+`;
+
 exports[`Should replace entire queue on sync() 1`] = `
 [
   {
