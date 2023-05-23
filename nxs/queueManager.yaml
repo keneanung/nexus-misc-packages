@@ -39,6 +39,14 @@ items:
         script: globalThis.queueManager.clear('all')
   - type: trigger
     enabled: true
+    name: Queue Empy Trigger
+    matching: regexp
+    text: "^You have no queued commands\\.$"
+    actions:
+      - action: script
+        script: globalThis.queueManager.clear('all')
+  - type: trigger
+    enabled: true
     name: Queue Prepend Trigger
     matching: regexp
     text: "^\\[System\\]: Prepended (.+) to your (.+) queue\\.$"
@@ -87,7 +95,7 @@ items:
         script: globalThis.queueManager.track(args[2], args[1])
   - type: trigger
     enabled: true
-    name: Queue Remove Trigger
+    name: Queue Run Trigger
     matching: regexp
     text: "^\\[System\\]: Running queued (.+) command: (.+)$"
     actions:
