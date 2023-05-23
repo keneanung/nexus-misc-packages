@@ -19,11 +19,6 @@ interface CustomQueueComponent {
   property: keyof QueuedItemProperties;
 }
 
-interface Command {
-  command: string;
-  queue: string;
-}
-
 const itemPropertiesEqual = (one: QueuedItemProperties, other: QueuedItemProperties) => {
   const keys = Object.keys(one);
   if (keys.length !== Object.keys(other).length) {
@@ -115,13 +110,6 @@ export class QueueManager {
 
   public getQueue = () => this.queue;
 
-  public sync = (newCommands: Command[]) => {
-    this.clear('all');
-    for (const { command, queue } of newCommands) {
-      this.track(command, queue);
-    }
-  };
-
   public clear = (queue: string) => {
     if (queue === 'all') {
       this.queue = [];
@@ -154,16 +142,11 @@ export class QueueManager {
     this.queue.splice(position - 1, 1);
   };
 
-  public trackAddClear = (command: string, queue: string, full = false) => {
-    this.clear(full ? 'all' : queue);
-    this.track(command, queue);
-  };
-
   public run = (command: string, queue: string) => {
     const itemProperties = this.parseQueue(queue);
     for (let i = 0; i < this.queue.length; i++) {
       const queuedItem = this.queue[i];
-      if (queuedItem.command == command && itemPropertiesEqual(queuedItem.properties, itemProperties)) {
+      if (queuedItem.command.toLowerCase() == command.toLowerCase() && itemPropertiesEqual(queuedItem.properties, itemProperties)) {
         this.queue.splice(i, 1);
         break;
       }
