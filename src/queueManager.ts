@@ -68,6 +68,9 @@ interface Command {
   queue: string;
 }
 
+/**
+ *  Tracks the content of the in-game queue and allows client side queueing to integrate with it while allowing other sources for queued items.
+ */
 export class QueueManager {
   private queue: QueuedItem[] = [];
 
