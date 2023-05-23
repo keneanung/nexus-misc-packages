@@ -150,3 +150,16 @@ test('Should remove run command from queue (not first item)', () => {
 
   expect(sut.getQueue()).toMatchSnapshot();
 });
+
+test('Workaround for in-game bug #17807', () => {
+  const sut = new QueueManager();
+  sut.track('sit', 'full');
+  sut.track('stand', 'full');
+  sut.track('sit', 'eu');
+
+  sut.run('sit', 'eu');
+  sut.run('stand', 'eu');
+  sut.run('sit', 'eu');
+
+  expect(sut.getQueue()).toMatchSnapshot();
+});

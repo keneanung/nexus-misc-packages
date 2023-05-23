@@ -608,3 +608,5 @@ exports[`Should translate property "w" correctly 1`] = `
   },
 ]
 `;
+
+exports[`Workaround for in-game bug #17807 1`] = `[]`;

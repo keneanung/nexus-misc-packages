@@ -144,12 +144,23 @@ export class QueueManager {
 
   public run = (command: string, queue: string) => {
     const itemProperties = this.parseQueue(queue);
+    const found = this.removeRunCommand(command, itemProperties, true);
+    if(!found){
+      this.removeRunCommand(command, itemProperties, false)
+    }
+  };
+
+  // The exact parameter is a workaround for in-game bug #17807, where the queue name/type is not correctly reflected in the queue run message
+  private removeRunCommand(command: string, itemProperties: QueuedItemProperties, exact: boolean) {
+    let found = false;
     for (let i = 0; i < this.queue.length; i++) {
       const queuedItem = this.queue[i];
-      if (queuedItem.command.toLowerCase() == command.toLowerCase() && itemPropertiesEqual(queuedItem.properties, itemProperties)) {
+      if (queuedItem.command.toLowerCase() == command.toLowerCase() && (!exact || itemPropertiesEqual(queuedItem.properties, itemProperties))) {
         this.queue.splice(i, 1);
+        found = true;
         break;
       }
     }
-  };
+    return found;
+  }
 }
