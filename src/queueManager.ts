@@ -14,19 +14,24 @@ interface QueuedItemProperties {
   beStunned?: boolean;
 }
 
+interface CustomQueueComponent {
+  letter: string;
+  property: keyof QueuedItemProperties;
+}
+
+interface Command {
+  command: string;
+  queue: string;
+}
+
 const itemPropertiesEqual = (one: QueuedItemProperties, other: QueuedItemProperties) => {
   const keys = Object.keys(one);
   if (keys.length !== Object.keys(other).length) {
     return false;
   }
-  const castedKeys = Object.keys(one) as (keyof typeof one)[];
+  const castedKeys = keys as (keyof typeof one)[];
   return castedKeys.every((key) => one[key] === other[key]);
 };
-
-interface CustomQueueComponent {
-  letter: string;
-  property: keyof QueuedItemProperties;
-}
 
 const customQueueTypeComponents: CustomQueueComponent[] = [
   {
@@ -63,9 +68,16 @@ const customQueueTypeComponents: CustomQueueComponent[] = [
   },
 ];
 
-interface Command {
-  command: string;
-  queue: string;
+const defaultQueueTranslations: {[key:string] : string} = {
+  equilibrium: 'e',
+  balance: 'b',
+  class: 'c',
+  paralysis: '!p',
+  unbound: '!w',
+  stun: '!t',
+  free: 'be!p!t',
+  freestand: 'be!p!tu',
+  full: 'be!p!tuc'
 }
 
 /**
@@ -80,33 +92,16 @@ export class QueueManager {
   }
 
   private parseQueue(queue: string): QueuedItemProperties {
-    if (queue === 'equilibrium') {
-      queue = 'e';
-    }
-    if (queue === 'balance') {
-      queue = 'b';
-    }
-    if (queue === 'class') {
-      queue = 'c';
-    }
-    if (queue === 'paralysis') {
-      queue = '!p';
-    }
-    if (queue === 'unbound') {
-      queue = '!w';
-    }
-    if (queue === 'stun') {
-      queue = '!t';
-    }
-    if (queue === 'free') {
-      queue = 'be!p!t';
-    }
-    if (queue === 'freestand') {
-      queue = 'be!p!tu';
-    }
-    if (queue === 'full') {
-      queue = 'be!p!tuc';
-    }
+    queue = this.translateDefaultQueues(queue);
+    const customProperties: QueuedItemProperties = this.translateQueueLettersToProperties(queue);
+    return customProperties;
+  }
+
+  private translateDefaultQueues(queue: string) {
+    return defaultQueueTranslations[queue] ?? queue;
+  }
+
+  private translateQueueLettersToProperties(queue: string) {
     const customProperties: QueuedItemProperties = {};
     for (const queueType of customQueueTypeComponents) {
       const index = queue.indexOf(queueType.letter);
