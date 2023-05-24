@@ -33,7 +33,7 @@
     "prettier": "^2.7.1",
     "regenerator-runtime": "^0.13.10",
     "ts-jest": "^29.0.3",
-    "ts-loader": "^9.4.1",
+    "ts-loader": "^9.4.3",
     "typescript": "^5.0.2",
     "webpack": "^5.83.1",
     "webpack-auto-inject-version-next": "^1.2.4",
