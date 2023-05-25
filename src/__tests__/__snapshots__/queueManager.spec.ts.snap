@@ -6,6 +6,7 @@ exports[`Should have remove items in class queue after clear("c") 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -17,6 +18,7 @@ exports[`Should have remove items in class queue after clear("c") 1`] = `
   },
   {
     "command": "baz",
+    "locallyControlled": false,
     "properties": {
       "haveShipBalance": true,
     },
@@ -28,6 +30,7 @@ exports[`Should have remove items in class queue after clear("class") 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -39,8 +42,36 @@ exports[`Should have remove items in class queue after clear("class") 1`] = `
   },
   {
     "command": "baz",
+    "locallyControlled": false,
     "properties": {
       "haveShipBalance": true,
+    },
+  },
+]
+`;
+
+exports[`Should not mark same item multiple times as local 1`] = `
+[
+  {
+    "command": "stand",
+    "locallyControlled": true,
+    "properties": {
+      "beBound": false,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+  {
+    "command": "stand",
+    "locallyControlled": false,
+    "properties": {
+      "beBound": false,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
     },
   },
 ]
@@ -50,6 +81,7 @@ exports[`Should put items at given position in queue with trackAt 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -61,12 +93,14 @@ exports[`Should put items at given position in queue with trackAt 1`] = `
   },
   {
     "command": "bar",
+    "locallyControlled": false,
     "properties": {
       "haveClassBalance": true,
     },
   },
   {
     "command": "bamboozle",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -77,6 +111,7 @@ exports[`Should put items at given position in queue with trackAt 1`] = `
   },
   {
     "command": "baz",
+    "locallyControlled": false,
     "properties": {
       "haveShipBalance": true,
     },
@@ -88,6 +123,7 @@ exports[`Should put prepended items first in queue 1`] = `
 [
   {
     "command": "bamboozle",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -98,6 +134,7 @@ exports[`Should put prepended items first in queue 1`] = `
   },
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -109,17 +146,35 @@ exports[`Should put prepended items first in queue 1`] = `
   },
   {
     "command": "bar",
+    "locallyControlled": false,
     "properties": {
       "haveClassBalance": true,
     },
   },
   {
     "command": "baz",
+    "locallyControlled": false,
     "properties": {
       "haveShipBalance": true,
     },
   },
 ]
+`;
+
+exports[`Should queue command to in-game queue when added locally and queue is full, but queue ran 1`] = `
+[MockFunction] {
+  "calls": [
+    [
+      "queue add eb!p!w!t stand",
+    ],
+  ],
+  "results": [
+    {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
 `;
 
 exports[`Should queue command to in-game queue when added locally and queue not full 1`] = `
@@ -138,10 +193,27 @@ exports[`Should queue command to in-game queue when added locally and queue not 
 }
 `;
 
+exports[`Should recognize own queue item on confirmation in game and mark it accordingly 1`] = `
+[
+  {
+    "command": "stand",
+    "locallyControlled": true,
+    "properties": {
+      "beBound": false,
+      "beStunned": false,
+      "haveBalance": true,
+      "haveEq": true,
+      "haveParalysis": false,
+    },
+  },
+]
+`;
+
 exports[`Should remove items at given position in queue with trackRemove 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -153,6 +225,7 @@ exports[`Should remove items at given position in queue with trackRemove 1`] = `
   },
   {
     "command": "baz",
+    "locallyControlled": false,
     "properties": {
       "haveShipBalance": true,
     },
@@ -164,6 +237,7 @@ exports[`Should remove run command from queue (not first item) 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -175,6 +249,7 @@ exports[`Should remove run command from queue (not first item) 1`] = `
   },
   {
     "command": "bar",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -186,6 +261,7 @@ exports[`Should remove run command from queue (not first item) 1`] = `
   },
   {
     "command": "baz",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -197,6 +273,7 @@ exports[`Should remove run command from queue (not first item) 1`] = `
   },
   {
     "command": "boom",
+    "locallyControlled": false,
     "properties": {
       "beStunned": false,
       "haveBalance": true,
@@ -211,6 +288,7 @@ exports[`Should remove run command from queue 1`] = `
 [
   {
     "command": "bar",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -222,6 +300,7 @@ exports[`Should remove run command from queue 1`] = `
   },
   {
     "command": "baz",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -233,6 +312,7 @@ exports[`Should remove run command from queue 1`] = `
   },
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beStunned": false,
       "haveBalance": true,
@@ -242,6 +322,7 @@ exports[`Should remove run command from queue 1`] = `
   },
   {
     "command": "boom",
+    "locallyControlled": false,
     "properties": {
       "beStunned": false,
       "haveBalance": true,
@@ -256,6 +337,7 @@ exports[`Should remove run command from queue with different casing 1`] = `
 [
   {
     "command": "bar",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -267,6 +349,7 @@ exports[`Should remove run command from queue with different casing 1`] = `
   },
   {
     "command": "baz",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -278,6 +361,7 @@ exports[`Should remove run command from queue with different casing 1`] = `
   },
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beStunned": false,
       "haveBalance": true,
@@ -287,6 +371,7 @@ exports[`Should remove run command from queue with different casing 1`] = `
   },
   {
     "command": "boom",
+    "locallyControlled": false,
     "properties": {
       "beStunned": false,
       "haveBalance": true,
@@ -301,6 +386,7 @@ exports[`Should replace items at given position in queue with trackReplace 1`] =
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -312,6 +398,7 @@ exports[`Should replace items at given position in queue with trackReplace 1`] =
   },
   {
     "command": "bamboozle",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -322,6 +409,7 @@ exports[`Should replace items at given position in queue with trackReplace 1`] =
   },
   {
     "command": "baz",
+    "locallyControlled": false,
     "properties": {
       "haveShipBalance": true,
     },
@@ -333,6 +421,7 @@ exports[`Should translate property "!b" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "haveBalance": false,
     },
@@ -344,6 +433,7 @@ exports[`Should translate property "!c" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "haveClassBalance": false,
     },
@@ -355,6 +445,7 @@ exports[`Should translate property "!e" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "haveEq": false,
     },
@@ -366,6 +457,7 @@ exports[`Should translate property "!p" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "haveParalysis": false,
     },
@@ -377,6 +469,7 @@ exports[`Should translate property "!s" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "haveShipBalance": false,
     },
@@ -388,6 +481,7 @@ exports[`Should translate property "!t" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beStunned": false,
     },
@@ -399,6 +493,7 @@ exports[`Should translate property "!u" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beStanding": false,
     },
@@ -410,6 +505,7 @@ exports[`Should translate property "!w" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beBound": false,
     },
@@ -421,6 +517,7 @@ exports[`Should translate property "b" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "haveBalance": true,
     },
@@ -432,6 +529,7 @@ exports[`Should translate property "balance" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "haveBalance": true,
     },
@@ -443,6 +541,7 @@ exports[`Should translate property "c" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "haveClassBalance": true,
     },
@@ -454,6 +553,7 @@ exports[`Should translate property "class" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "haveClassBalance": true,
     },
@@ -465,6 +565,7 @@ exports[`Should translate property "e" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "haveEq": true,
     },
@@ -476,6 +577,7 @@ exports[`Should translate property "equilibrium" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "haveEq": true,
     },
@@ -487,6 +589,7 @@ exports[`Should translate property "free" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beStunned": false,
       "haveBalance": true,
@@ -501,6 +604,7 @@ exports[`Should translate property "freestand" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -516,6 +620,7 @@ exports[`Should translate property "frl" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {},
   },
 ]
@@ -525,6 +630,7 @@ exports[`Should translate property "full" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
       "beStunned": false,
@@ -541,6 +647,7 @@ exports[`Should translate property "p" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "haveParalysis": true,
     },
@@ -552,6 +659,7 @@ exports[`Should translate property "paralysis" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "haveParalysis": false,
     },
@@ -563,6 +671,7 @@ exports[`Should translate property "s" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "haveShipBalance": true,
     },
@@ -574,6 +683,7 @@ exports[`Should translate property "stun" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beStunned": false,
     },
@@ -585,6 +695,7 @@ exports[`Should translate property "t" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beStunned": true,
     },
@@ -596,6 +707,7 @@ exports[`Should translate property "u" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beStanding": true,
     },
@@ -607,6 +719,7 @@ exports[`Should translate property "unbound" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beBound": false,
     },
@@ -618,6 +731,7 @@ exports[`Should translate property "w" correctly 1`] = `
 [
   {
     "command": "foo",
+    "locallyControlled": false,
     "properties": {
       "beBound": true,
     },

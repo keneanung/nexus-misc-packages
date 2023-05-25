@@ -187,3 +187,83 @@ test('Should queue command to in-game queue when added locally and queue not ful
 
   expect(sendCommandMock).toMatchSnapshot();
 });
+
+test('Should not attempt to queue command to in-game queue when added locally and queue is full', () => {
+  const sut = new QueueManager();
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+
+  sut.do('stand', {
+    haveBalance: true,
+    haveEq: true,
+    haveParalysis: false,
+    beStunned: false,
+    beBound: false,
+  });
+
+  expect(sendCommandMock).toBeCalledTimes(0);
+});
+
+test('Should recognize own queue item on confirmation in game and mark it accordingly', () =>{
+  const sut = new QueueManager();
+
+  sut.do('stand', {
+    haveBalance: true,
+    haveEq: true,
+    haveParalysis: false,
+    beStunned: false,
+    beBound: false,
+  })
+  sut.track('stand', 'eb!p!t!w');
+
+  expect(sut.getQueue()).toMatchSnapshot()
+})
+
+test('Should not mark same item multiple times as local', () =>{
+  const sut = new QueueManager();
+
+  sut.do('stand', {
+    haveBalance: true,
+    haveEq: true,
+    haveParalysis: false,
+    beStunned: false,
+    beBound: false,
+  })
+  sut.track('stand', 'eb!p!t!w');
+  sut.track('stand', 'eb!p!t!w');
+
+  expect(sut.getQueue()).toMatchSnapshot()
+})
+
+test('Should queue command to in-game queue when added locally and queue is full, but queue ran', () => {
+  const sut = new QueueManager();
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+
+  sut.do('stand', {
+    haveBalance: true,
+    haveEq: true,
+    haveParalysis: false,
+    beStunned: false,
+    beBound: false,
+  });
+  sut.run('sit', 'full')
+
+  expect(sendCommandMock).toMatchSnapshot();
+});
+
+test('Should not queue commands that are already being queued',() => {
+//TODO
+})
+
+test('Should re-attempt to queue things if first attempt was blocked due to queue being full',() => {
+//TODO
+})

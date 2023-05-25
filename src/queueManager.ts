@@ -1,8 +1,15 @@
 import { sendCommand } from "./nexusApi";
 
+interface UnsyncedItem {
+  command: string;
+  properties: QueuedItemProperties;
+
+}
+
 interface QueuedItem {
   command: string;
   properties: QueuedItemProperties;
+  locallyControlled: boolean;
 }
 
 interface QueuedItemProperties {
@@ -83,10 +90,15 @@ const defaultQueueTranslations: { [key: string]: string } = {
 export class QueueManager {
 
   private queue: QueuedItem[] = [];
+  private localUnsyncedItems: UnsyncedItem[] = [];
 
   public track(command: string, queue: string) {
     const itemProperties = this.parseQueue(queue);
-    this.queue.push({ command, properties: itemProperties });
+    const localFound = this.localUnsyncedItems.findIndex((item) => item.command === command && itemPropertiesEqual(item.properties, itemProperties));
+    if(localFound > -1){
+      this.localUnsyncedItems.splice(localFound, 1)
+    }
+    this.queue.push({ command, properties: itemProperties, locallyControlled: localFound > -1 });
   }
 
   private parseQueue(queue: string): QueuedItemProperties {
@@ -128,17 +140,17 @@ export class QueueManager {
 
   public trackFirst = (command: string, queue: string) => {
     const itemProperties = this.parseQueue(queue);
-    this.queue.unshift({ command, properties: itemProperties });
+    this.queue.unshift({ command, properties: itemProperties, locallyControlled: false });
   };
 
   public trackAt = (position: number, command: string, queue: string) => {
     const itemProperties = this.parseQueue(queue);
-    this.queue.splice(position - 1, 0, { command, properties: itemProperties });
+    this.queue.splice(position - 1, 0, { command, properties: itemProperties, locallyControlled: false });
   };
 
   public trackReplace = (position: number, command: string, queue: string) => {
     const itemProperties = this.parseQueue(queue);
-    this.queue.splice(position - 1, 1, { command, properties: itemProperties });
+    this.queue.splice(position - 1, 1, { command, properties: itemProperties, locallyControlled: false });
   };
 
   public trackRemove = (position: number) => {
@@ -151,6 +163,7 @@ export class QueueManager {
     if (!found) {
       this.removeRunCommand(command, itemProperties, false);
     }
+    this.sendLocalCommands();
   };
 
   // The exact parameter is a workaround for in-game bug #17807, where the queue name/type is not correctly reflected in the queue run message
@@ -171,9 +184,21 @@ export class QueueManager {
   }
 
   public do = (command: string, properties: QueuedItemProperties) => {
-    const queueLetters: string = this.translateItemProperties(properties)
-    sendCommand(`queue add ${queueLetters} ${command}`)
+    this.localUnsyncedItems.push({command, properties})
+    this.sendLocalCommands();
   };
+
+  private sendLocalCommands = () => {
+
+    let index = 0;
+
+    while(this.queue.length + index < 6 && index < this.localUnsyncedItems.length){
+      const {command, properties} = this.localUnsyncedItems[index];
+      index++;
+      const queueLetters: string = this.translateItemProperties(properties)
+      sendCommand(`queue add ${queueLetters} ${command}`)
+    }
+  }
 
   private translateItemProperties = (properties: QueuedItemProperties) => {
     let queueLetters = "";
@@ -184,5 +209,9 @@ export class QueueManager {
       }
     }
     return queueLetters;
+  }
+
+  public queueFull = () => {
+    return this.queue.length >= 6
   }
 }
