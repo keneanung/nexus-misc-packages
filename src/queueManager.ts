@@ -1,3 +1,5 @@
+import { sendCommand } from "./nexusApi";
+
 interface QueuedItem {
   command: string;
   properties: QueuedItemProperties;
@@ -63,7 +65,7 @@ const customQueueTypeComponents: CustomQueueComponent[] = [
   },
 ];
 
-const defaultQueueTranslations: {[key:string] : string} = {
+const defaultQueueTranslations: { [key: string]: string } = {
   equilibrium: 'e',
   balance: 'b',
   class: 'c',
@@ -72,13 +74,14 @@ const defaultQueueTranslations: {[key:string] : string} = {
   stun: '!t',
   free: 'be!p!t',
   freestand: 'be!p!tu',
-  full: 'be!p!tuc'
-}
+  full: 'be!p!tuc',
+};
 
 /**
  *  Tracks the content of the in-game queue and allows client side queueing to integrate with it while allowing other sources for queued items.
  */
 export class QueueManager {
+
   private queue: QueuedItem[] = [];
 
   public track(command: string, queue: string) {
@@ -145,8 +148,8 @@ export class QueueManager {
   public run = (command: string, queue: string) => {
     const itemProperties = this.parseQueue(queue);
     const found = this.removeRunCommand(command, itemProperties, true);
-    if(!found){
-      this.removeRunCommand(command, itemProperties, false)
+    if (!found) {
+      this.removeRunCommand(command, itemProperties, false);
     }
   };
 
@@ -155,12 +158,31 @@ export class QueueManager {
     let found = false;
     for (let i = 0; i < this.queue.length; i++) {
       const queuedItem = this.queue[i];
-      if (queuedItem.command.toLowerCase() == command.toLowerCase() && (!exact || itemPropertiesEqual(queuedItem.properties, itemProperties))) {
+      if (
+        queuedItem.command.toLowerCase() == command.toLowerCase() &&
+        (!exact || itemPropertiesEqual(queuedItem.properties, itemProperties))
+      ) {
         this.queue.splice(i, 1);
         found = true;
         break;
       }
     }
     return found;
+  }
+
+  public do = (command: string, properties: QueuedItemProperties) => {
+    const queueLetters: string = this.translateItemProperties(properties)
+    sendCommand(`queue add ${queueLetters} ${command}`)
+  };
+
+  private translateItemProperties = (properties: QueuedItemProperties) => {
+    let queueLetters = "";
+    for(const component of customQueueTypeComponents) {
+      const propertyValue = properties[component.property]
+      if ( propertyValue !== undefined) {
+        queueLetters += (propertyValue ? '' : '!') + component.letter
+      }
+    }
+    return queueLetters;
   }
 }

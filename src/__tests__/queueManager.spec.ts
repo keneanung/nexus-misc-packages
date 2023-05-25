@@ -1,4 +1,14 @@
 import { QueueManager } from '../queueManager';
+import { sendCommand } from '../nexusApi';
+
+jest.mock('../nexusApi')
+const sendCommandMock = jest.mocked(sendCommand);
+
+// Reset handlers so that each test could alter them
+// without affecting other, unrelated tests.
+afterEach(() => {
+  sendCommandMock.mockReset();
+});
 
 test.each([
   ['e'],
@@ -162,4 +172,18 @@ test('Workaround for in-game bug #17807', () => {
   sut.run('sit', 'eu');
 
   expect(sut.getQueue()).toMatchSnapshot();
+});
+
+test('Should queue command to in-game queue when added locally and queue not full', () => {
+  const sut = new QueueManager();
+
+  sut.do('stand', {
+    haveBalance: true,
+    haveEq: true,
+    haveParalysis: false,
+    beStunned: false,
+    beBound: false,
+  });
+
+  expect(sendCommandMock).toMatchSnapshot();
 });

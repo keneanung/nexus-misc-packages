@@ -122,6 +122,22 @@ exports[`Should put prepended items first in queue 1`] = `
 ]
 `;
 
+exports[`Should queue command to in-game queue when added locally and queue not full 1`] = `
+[MockFunction] {
+  "calls": [
+    [
+      "queue add eb!p!w!t stand",
+    ],
+  ],
+  "results": [
+    {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
 exports[`Should remove items at given position in queue with trackRemove 1`] = `
 [
   {
