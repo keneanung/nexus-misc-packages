@@ -261,9 +261,45 @@ test('Should queue command to in-game queue when added locally and queue is full
 });
 
 test('Should not queue commands that are already being queued',() => {
-//TODO
+  const sut = new QueueManager();
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+
+  sut.do('stand', {
+    haveBalance: true,
+    haveEq: true,
+    haveParalysis: false,
+    beStunned: false,
+    beBound: false,
+  });
+  sut.track('sit', 'full');
+  sut.run('sit', 'full');
+
+  expect(sendCommandMock).toMatchSnapshot();
+  
 })
 
 test('Should re-attempt to queue things if first attempt was blocked due to queue being full',() => {
-//TODO
+  const sut = new QueueManager();
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+  sut.track('sit', 'full');
+
+  sut.do('stand', {
+    haveBalance: true,
+    haveEq: true,
+    haveParalysis: false,
+    beStunned: false,
+    beBound: false,
+  });
+  sut.track('sit', 'full');
+  sut.blocked();
+  sut.run('sit', 'full');
+
+  expect(sendCommandMock).toMatchSnapshot();
 })

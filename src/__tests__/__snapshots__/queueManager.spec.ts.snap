@@ -77,6 +77,22 @@ exports[`Should not mark same item multiple times as local 1`] = `
 ]
 `;
 
+exports[`Should not queue commands that are already being queued 1`] = `
+[MockFunction] {
+  "calls": [
+    [
+      "queue add eb!p!w!t stand",
+    ],
+  ],
+  "results": [
+    {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
 exports[`Should put items at given position in queue with trackAt 1`] = `
 [
   {
@@ -185,6 +201,29 @@ exports[`Should queue command to in-game queue when added locally and queue not 
     ],
   ],
   "results": [
+    {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`Should re-attempt to queue things if first attempt was blocked due to queue being full 1`] = `
+[MockFunction] {
+  "calls": [
+    [
+      "queue add eb!p!w!t stand",
+    ],
+    [
+      "queue add eb!p!w!t stand",
+    ],
+  ],
+  "results": [
+    {
+      "type": "return",
+      "value": undefined,
+    },
     {
       "type": "return",
       "value": undefined,

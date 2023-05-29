@@ -3,7 +3,7 @@ import { sendCommand } from "./nexusApi";
 interface UnsyncedItem {
   command: string;
   properties: QueuedItemProperties;
-
+  queueing: boolean;
 }
 
 interface QueuedItem {
@@ -184,7 +184,7 @@ export class QueueManager {
   }
 
   public do = (command: string, properties: QueuedItemProperties) => {
-    this.localUnsyncedItems.push({command, properties})
+    this.localUnsyncedItems.push({command, properties, queueing: false})
     this.sendLocalCommands();
   };
 
@@ -193,10 +193,14 @@ export class QueueManager {
     let index = 0;
 
     while(this.queue.length + index < 6 && index < this.localUnsyncedItems.length){
-      const {command, properties} = this.localUnsyncedItems[index];
+      const item = this.localUnsyncedItems[index];
       index++;
-      const queueLetters: string = this.translateItemProperties(properties)
-      sendCommand(`queue add ${queueLetters} ${command}`)
+      if(item.queueing){
+        continue;
+      }
+      const queueLetters: string = this.translateItemProperties(item.properties)
+      sendCommand(`queue add ${queueLetters} ${item.command}`)
+      item.queueing = true;
     }
   }
 
@@ -211,7 +215,10 @@ export class QueueManager {
     return queueLetters;
   }
 
-  public queueFull = () => {
-    return this.queue.length >= 6
+  public blocked = () => {
+    const queueing = this.localUnsyncedItems.find((item) => item.queueing)
+    if (queueing !== undefined) {
+      queueing.queueing = false;
+    }
   }
 }
