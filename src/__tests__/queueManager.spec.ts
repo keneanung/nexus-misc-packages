@@ -1,7 +1,7 @@
 import { QueueManager } from '../queueManager';
 import { sendCommand } from '../nexusApi';
 
-jest.mock('../nexusApi')
+jest.mock('../nexusApi');
 const sendCommandMock = jest.mocked(sendCommand);
 
 // Reset handlers so that each test could alter them
@@ -208,7 +208,7 @@ test('Should not attempt to queue command to in-game queue when added locally an
   expect(sendCommandMock).toHaveBeenCalledTimes(0);
 });
 
-test('Should recognize own queue item on confirmation in game and mark it accordingly', () =>{
+test('Should recognize own queue item on confirmation in game and mark it accordingly', () => {
   const sut = new QueueManager();
 
   sut.do('stand', {
@@ -217,13 +217,13 @@ test('Should recognize own queue item on confirmation in game and mark it accord
     haveParalysis: false,
     beStunned: false,
     beBound: false,
-  })
+  });
   sut.track('stand', 'eb!p!t!w');
 
-  expect(sut.getQueue()).toMatchSnapshot()
-})
+  expect(sut.getQueue()).toMatchSnapshot();
+});
 
-test('Should not mark same item multiple times as local', () =>{
+test('Should not mark same item multiple times as local', () => {
   const sut = new QueueManager();
 
   sut.do('stand', {
@@ -232,12 +232,12 @@ test('Should not mark same item multiple times as local', () =>{
     haveParalysis: false,
     beStunned: false,
     beBound: false,
-  })
+  });
   sut.track('stand', 'eb!p!t!w');
   sut.track('stand', 'eb!p!t!w');
 
-  expect(sut.getQueue()).toMatchSnapshot()
-})
+  expect(sut.getQueue()).toMatchSnapshot();
+});
 
 test('Should queue command to in-game queue when added locally and queue is full, but queue ran', () => {
   const sut = new QueueManager();
@@ -255,12 +255,12 @@ test('Should queue command to in-game queue when added locally and queue is full
     beStunned: false,
     beBound: false,
   });
-  sut.run('sit', 'full')
+  sut.run('sit', 'full');
 
   expect(sendCommandMock).toMatchSnapshot();
 });
 
-test('Should not queue commands that are already being queued',() => {
+test('Should not queue commands that are already being queued', () => {
   const sut = new QueueManager();
   sut.track('sit', 'full');
   sut.track('sit', 'full');
@@ -279,10 +279,9 @@ test('Should not queue commands that are already being queued',() => {
   sut.run('sit', 'full');
 
   expect(sendCommandMock).toMatchSnapshot();
-  
-})
+});
 
-test('Should re-attempt to queue things if first attempt was blocked due to queue being full',() => {
+test('Should re-attempt to queue things if first attempt was blocked due to queue being full', () => {
   const sut = new QueueManager();
   sut.track('sit', 'full');
   sut.track('sit', 'full');
@@ -302,20 +301,24 @@ test('Should re-attempt to queue things if first attempt was blocked due to queu
   sut.run('sit', 'full');
 
   expect(sendCommandMock).toMatchSnapshot();
-})
+});
 
 test('Should re-queue things after being queued with dor and run', () => {
   const sut = new QueueManager();
 
-  sut.do('stand', {
-    haveBalance: true,
-    haveEq: true,
-    haveParalysis: false,
-    beStunned: false,
-    beBound: false,
-  }, true)
-  sut.track('stand', 'eb!p!t!w')
-  sut.run('stand', 'eb!p!t!w')
+  sut.do(
+    'stand',
+    {
+      haveBalance: true,
+      haveEq: true,
+      haveParalysis: false,
+      beStunned: false,
+      beBound: false,
+    },
+    true,
+  );
+  sut.track('stand', 'eb!p!t!w');
+  sut.run('stand', 'eb!p!t!w');
 
   expect(sendCommandMock).toMatchSnapshot();
-})
+});

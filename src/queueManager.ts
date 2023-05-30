@@ -1,4 +1,4 @@
-import { sendCommand } from "./nexusApi";
+import { sendCommand } from './nexusApi';
 
 interface UnsyncedItem {
   command: string;
@@ -90,19 +90,25 @@ const defaultQueueTranslations: { [key: string]: string } = {
  *  Tracks the content of the in-game queue and allows client side queueing to integrate with it while allowing other sources for queued items.
  */
 export class QueueManager {
-
   private queue: QueuedItem[] = [];
   private localUnsyncedItems: UnsyncedItem[] = [];
 
   public track(command: string, queue: string) {
     const itemProperties = this.parseQueue(queue);
-    const localFound = this.localUnsyncedItems.findIndex((item) => item.command === command && itemPropertiesEqual(item.properties, itemProperties));
-    let local: UnsyncedItem | undefined = undefined
-    if(localFound > -1){
+    const localFound = this.localUnsyncedItems.findIndex(
+      (item) => item.command === command && itemPropertiesEqual(item.properties, itemProperties),
+    );
+    let local: UnsyncedItem | undefined = undefined;
+    if (localFound > -1) {
       local = this.localUnsyncedItems[localFound];
-      this.localUnsyncedItems.splice(localFound, 1)
+      this.localUnsyncedItems.splice(localFound, 1);
     }
-    this.queue.push({ command, properties: itemProperties, locallyControlled: localFound > -1, repeat: local?.repeat ?? false });
+    this.queue.push({
+      command,
+      properties: itemProperties,
+      locallyControlled: localFound > -1,
+      repeat: local?.repeat ?? false,
+    });
   }
 
   private parseQueue(queue: string): QueuedItemProperties {
@@ -149,12 +155,22 @@ export class QueueManager {
 
   public trackAt = (position: number, command: string, queue: string) => {
     const itemProperties = this.parseQueue(queue);
-    this.queue.splice(position - 1, 0, { command, properties: itemProperties, locallyControlled: false, repeat: false });
+    this.queue.splice(position - 1, 0, {
+      command,
+      properties: itemProperties,
+      locallyControlled: false,
+      repeat: false,
+    });
   };
 
   public trackReplace = (position: number, command: string, queue: string) => {
     const itemProperties = this.parseQueue(queue);
-    this.queue.splice(position - 1, 1, { command, properties: itemProperties, locallyControlled: false, repeat: false });
+    this.queue.splice(position - 1, 1, {
+      command,
+      properties: itemProperties,
+      locallyControlled: false,
+      repeat: false,
+    });
   };
 
   public trackRemove = (position: number) => {
@@ -167,8 +183,8 @@ export class QueueManager {
     if (!found) {
       found = this.removeRunCommand(command, itemProperties, false);
     }
-    if(found?.repeat){
-      this.localUnsyncedItems.push({...found, repeat: true, queueing: false})
+    if (found?.repeat) {
+      this.localUnsyncedItems.push({ ...found, repeat: true, queueing: false });
     }
     this.sendLocalCommands();
   };
@@ -182,48 +198,47 @@ export class QueueManager {
         (!exact || itemPropertiesEqual(queuedItem.properties, itemProperties))
       ) {
         this.queue.splice(i, 1);
-        return queuedItem
+        return queuedItem;
       }
     }
-    return undefined
+    return undefined;
   }
 
   public do = (command: string, properties: QueuedItemProperties, repeat = false) => {
-    this.localUnsyncedItems.push({command, properties, queueing: false, repeat: repeat})
+    this.localUnsyncedItems.push({ command, properties, queueing: false, repeat: repeat });
     this.sendLocalCommands();
   };
 
   private sendLocalCommands = () => {
-
     let index = 0;
 
-    while(this.queue.length + index < 6 && index < this.localUnsyncedItems.length){
+    while (this.queue.length + index < 6 && index < this.localUnsyncedItems.length) {
       const item = this.localUnsyncedItems[index];
       index++;
-      if(item.queueing){
+      if (item.queueing) {
         continue;
       }
-      const queueLetters: string = this.translateItemProperties(item.properties)
-      sendCommand(`queue add ${queueLetters} ${item.command}`)
+      const queueLetters: string = this.translateItemProperties(item.properties);
+      sendCommand(`queue add ${queueLetters} ${item.command}`);
       item.queueing = true;
     }
-  }
+  };
 
   private translateItemProperties = (properties: QueuedItemProperties) => {
-    let queueLetters = "";
-    for(const component of customQueueTypeComponents) {
-      const propertyValue = properties[component.property]
-      if ( propertyValue !== undefined) {
-        queueLetters += (propertyValue ? '' : '!') + component.letter
+    let queueLetters = '';
+    for (const component of customQueueTypeComponents) {
+      const propertyValue = properties[component.property];
+      if (propertyValue !== undefined) {
+        queueLetters += (propertyValue ? '' : '!') + component.letter;
       }
     }
     return queueLetters;
-  }
+  };
 
   public blocked = () => {
-    const queueing = this.localUnsyncedItems.find((item) => item.queueing)
+    const queueing = this.localUnsyncedItems.find((item) => item.queueing);
     if (queueing !== undefined) {
       queueing.queueing = false;
     }
-  }
+  };
 }

@@ -2,5 +2,5 @@
 // @ts-nocheck
 
 export const sendCommand = (command: string) => {
-    nexusclient.send_commands(command, false)
-}
+  nexusclient.send_commands(command, false);
+};
