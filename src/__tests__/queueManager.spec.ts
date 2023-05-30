@@ -205,7 +205,7 @@ test('Should not attempt to queue command to in-game queue when added locally an
     beBound: false,
   });
 
-  expect(sendCommandMock).toBeCalledTimes(0);
+  expect(sendCommandMock).toHaveBeenCalledTimes(0);
 });
 
 test('Should recognize own queue item on confirmation in game and mark it accordingly', () =>{
