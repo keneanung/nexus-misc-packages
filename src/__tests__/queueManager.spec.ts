@@ -303,3 +303,19 @@ test('Should re-attempt to queue things if first attempt was blocked due to queu
 
   expect(sendCommandMock).toMatchSnapshot();
 })
+
+test('Should re-queue things after being queued with dor and run', () => {
+  const sut = new QueueManager();
+
+  sut.do('stand', {
+    haveBalance: true,
+    haveEq: true,
+    haveParalysis: false,
+    beStunned: false,
+    beBound: false,
+  }, true)
+  sut.track('stand', 'eb!p!t!w')
+  sut.run('stand', 'eb!p!t!w')
+
+  expect(sendCommandMock).toMatchSnapshot();
+})
