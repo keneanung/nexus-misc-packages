@@ -101,4 +101,13 @@ items:
     actions:
       - action: script
         script: globalThis.queueManager.run(args[2], args[1])
+  - type: trigger
+    enabled: true
+    name: Queue Full
+    matching: exact
+    text: "[System]: Your queue is full."
+    actions:
+      - action: script
+        script: globalThis.queueManager.blocked()
+    
 
